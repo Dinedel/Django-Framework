@@ -1,0 +1,13 @@
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Subject: 
+ =?utf-8?b?0J/QvtC00YLQstC10YDQttC00LXQvdC40LUg0YPRh9C10YLQvdC+0Lkg0LfQsNC/?=
+ =?utf-8?b?0LjRgdC4IGRqYW5nbzQyNDI=?=
+From: django@geekbrains.local
+To: django4242@geekshop.local
+Date: Tue, 29 Dec 2020 08:46:30 -0000
+Message-ID: <160923159023.8860.11469831000853468948@DESKTOP-85VI154>
+
+Для подтверждения учетной записи django4242 на портале http://localhost:8000 перейдите по ссылке: http://localhost:8000/auth/verify/django4242@geekshop.local/6380dbeb57d0dbd452691d4cec86d58a05453e10/
+-------------------------------------------------------------------------------
