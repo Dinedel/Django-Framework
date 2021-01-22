@@ -1,17 +1,18 @@
 from django import forms
+
+from mainapp.models import Product
 from ordersapp.models import Order, OrderItem
 
 
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = '__all__'
+        exclude = ('user'),
 
     def __init__(self, *args, **kwargs):
-        super(OrderForm,).__init__(*args, **kwargs)
+        super(OrderForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-            field.help_text = ''
 
 
 class OrderItemForm(forms.ModelForm):
@@ -19,10 +20,12 @@ class OrderItemForm(forms.ModelForm):
 
     class Meta:
         model = OrderItem
+        exclude = ()
         fields = '__all__'
 
     def __init__(self, *args, **kwargs):
         super(OrderItemForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'
-            field.help_text = ''
+
+        self.fields['product'].queryset = Product.get_items().select_related()
