@@ -8,6 +8,32 @@ from django.shortcuts import render, get_object_or_404
 
 from .models import Product, ProductCategory
 
+from django.core.cache import cache
+
+
+def get_links_menu():
+    if settings.LOW_CACHE:
+        key = 'links_menu'
+        links_menu = cache.get(key)
+        if links_menu is None:
+            links_menu = ProductCategory.objects.filter(is_active=True)
+            cache.set(key, links_menu)
+        return links_menu
+    else:
+        return ProductCategory.objects.filter(is_active=True)
+
+
+def get_category(pk):
+    if settings.LOW_CACHE:
+        key = f'category_{pk}'
+        category = cache.get(key)
+        if category is None:
+            category = get_object_or_404(ProductCategory, pk=pk)
+            cache.set(key, category)
+        return category
+    else:
+        return get_object_or_404(ProductCategory, pk=pk)
+
 
 def get_hot_product():
     products = Product.objects.all()
@@ -33,7 +59,8 @@ def products(request, pk=None, page=1):
     print(pk)
 
     title = 'Продукты'
-    links_menu = ProductCategory.objects.all()
+    links_menu = get_links_menu()
+   # links_menu = ProductCategory.objects.all()
 
     hot_product = get_hot_product()
     same_products = get_same_products(hot_product)
@@ -43,7 +70,8 @@ def products(request, pk=None, page=1):
             products_list = Product.objects.all()
             category = {'name': 'все', 'pk': 0}
         else:
-            category = get_object_or_404(ProductCategory, pk=pk)
+           # category = get_object_or_404(ProductCategory, pk=pk)
+            category = get_category(pk)
             products_list = Product.objects.filter(category__pk=pk).order_by('price')
 
         paginator = Paginator(products_list, 2)
