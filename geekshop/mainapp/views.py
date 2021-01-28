@@ -10,6 +10,8 @@ from .models import Product, ProductCategory
 
 from django.core.cache import cache
 
+from django.views.decorators.cache import cache_page
+
 
 def get_links_menu():
     if settings.LOW_CACHE:
@@ -55,6 +57,7 @@ def main(request):
     return render(request, 'mainapp/index.html', content)
 
 
+@cache_page(3600)
 def products(request, pk=None, page=1):
     print(pk)
 
